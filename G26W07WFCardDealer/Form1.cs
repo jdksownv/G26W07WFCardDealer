@@ -11,15 +11,24 @@ namespace G26W07WFCardDealer
 
         private void OnDeal(object sender, EventArgs e)
         {
-            //Card1.Image = Properties.Resources.ace_of_clubs;
-            //Card1.Image = Properties.Resources._10_of_clubs;
+            string[] suits = ["spades", "hearts", "diamonds", "clubs"];
+            string[] values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"];
 
-            String name = "3000_of_clubs";
+            Random random = new Random();
+            int card = random.Next(suits.Length * values.Length);
 
-            Card1.Image = Properties.Resources.ResourceManager
-                .GetObject(name) as Image
-                ?? Properties.Resources.red_joker;
+            string suit = suits[card / values.Length];
+            string value = values[card % values.Length];
 
+            if (value == "jack" || value == "queen" || value == "king")
+            {
+                suit += "2";
+            }
+
+            Card1.Image = Properties.Resources
+                .ResourceManager
+                .GetObject($"{value}_of_{suit}")
+                as Image;
         }
     }
 }
